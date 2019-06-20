@@ -7,10 +7,12 @@
 
 
 #include <xc.h>
+#include <stdio.h>
+//#include <string.h>
 #include <stdint.h>
-
+#include "fontt_resources.h"
 #include "glcd128x64/glcd_lib.h"
-
+#define samplefont Tahoma12x16_Regular
 /* GLCD details for EasyPIC
  * 
  *  1	CS1	RB0	Active low
@@ -35,6 +37,7 @@
  *  20	LED-
  */
 void main(void) {
+    char buf[20];
     ANSELD=0;
     //OSCCON NEEDED FOR PIC18F45K22
 #ifdef OSCCON
@@ -58,45 +61,17 @@ void main(void) {
         __delay_ms(100);
     }
     glcd_clear();
-    
-    for(uint8_t x=0;x<64;x++)
-        glcd_vline(x+32,x,63-x,1);
-    for(uint8_t x=4;x<28;x++)
-        glcd_vline(x+32,x+2,61-x,0);
-    
-    for(uint8_t x=10;x<=100;x++)
+    uint8_t high;
+    high=samplefont[0x06];
+    uint8_t len=sprintf(buf,"Height %hi",high);
+    glcd_systext(64-len*3,32,buf,len);
+
+
+
+    for(uint8_t d=0;d<=50;d++)
     {
-        glcd_setpixel(x,15,1);
-        glcd_setpixel(x,50,1);
+        __delay_ms(100);
     }
-    for(uint8_t y=16;y<50;y++)
-    {
-        glcd_setpixel(10,y,1);
-        glcd_setpixel(100,y,1);
-    }
-/*    glcdunset(glcd_cs1);
-    glcdset(glcd_cs2);
-    glcdset(glcd_rs);
-    for(uint8_t aa =0; aa<=0x3f; aa++)
-    {
-        glcddata=aa;
-        glcdset(glcd_e);
-        glcd_wait();
-        glcdunset(glcd_e);
-        glcd_wait();
-    }
-  */  
-    __delay_ms(200);
-    __delay_ms(200);
-    __delay_ms(200);
-    __delay_ms(200);
-    __delay_ms(200);
-    __delay_ms(200);
-    __delay_ms(200);
-    __delay_ms(200);
-    __delay_ms(200);
-    __delay_ms(200);
-    __delay_ms(200);
     glcd_clear();
     for(uint8_t aa=10;aa<=100;aa+=10)
     {
