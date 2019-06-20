@@ -8,7 +8,6 @@
 
 #include <xc.h>
 #include <stdio.h>
-//#include <string.h>
 #include <stdint.h>
 #include "fontt_resources.h"
 #include "glcd128x64/glcd_lib.h"
@@ -63,9 +62,25 @@ void main(void) {
     glcd_clear();
     uint8_t high;
     high=samplefont[0x06];
-    uint8_t len=sprintf(buf,"Height %hi",high);
-    glcd_systext(64-len*3,32,buf,len);
-
+    uint8_t len;
+    len=sprintf(buf,"Height %hi",high);
+    glcd_systext(64-len*3,8,buf,len);
+    char test[]="test";
+    uint16_t i=(test[1]-samplefont[2])*4+8;
+    uint8_t wide=samplefont[i];
+    const char * bitmap;
+    bitmap=samplefont+(samplefont[i+1]+(samplefont[i+2]<<8));
+    len=sprintf(buf,"Width %hi",wide);
+    glcd_systext(64-len*3,24,buf,len);
+    /*
+    uint8_t w2=(wide+7)/8;
+    for(uint8_t y=0;y<high;y++) {
+        for (uint8_t x = 0; x < wide; x++) {
+            glcd_setpixel(x,y,bitmap[x/8] & (1<<(x&7))); 
+        }
+        bitmap+=w2;
+    }
+    */
 
 
     for(uint8_t d=0;d<=50;d++)
