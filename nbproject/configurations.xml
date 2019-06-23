@@ -9,6 +9,14 @@
         <itemPath>glcd128x64/systfont.h</itemPath>
         <itemPath>glcd128x64/glcd_hardware_sample.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="MCC Generated Files"
+                     displayName="MCC Generated Files"
+                     projectFiles="true">
+        <itemPath>mcc_generated_files/device_config.h</itemPath>
+        <itemPath>mcc_generated_files/pin_manager.h</itemPath>
+        <itemPath>mcc_generated_files/adcc.h</itemPath>
+        <itemPath>mcc_generated_files/mcc.h</itemPath>
+      </logicalFolder>
       <itemPath>glcd_hardware.h</itemPath>
       <itemPath>fontt_resources.h</itemPath>
     </logicalFolder>
@@ -23,6 +31,14 @@
         <itemPath>glcd128x64/glcd_lib.c</itemPath>
         <itemPath>glcd128x64/systfont.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="MCC Generated Files"
+                     displayName="MCC Generated Files"
+                     projectFiles="true">
+        <itemPath>mcc_generated_files/adcc.c</itemPath>
+        <itemPath>mcc_generated_files/device_config.c</itemPath>
+        <itemPath>mcc_generated_files/mcc.c</itemPath>
+        <itemPath>mcc_generated_files/pin_manager.c</itemPath>
+      </logicalFolder>
       <itemPath>configk22.c</itemPath>
       <itemPath>configk42.c</itemPath>
       <itemPath>main.c</itemPath>
@@ -32,6 +48,7 @@
                    displayName="Important Files"
                    projectFiles="false">
       <itemPath>Makefile</itemPath>
+      <itemPath>MyConfig.mc3</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -620,6 +637,8 @@
         </HI-TECH-LINK>
         <XC8-config-global>
         </XC8-config-global>
+      </item>
+      <item path="configk42.c" ex="true" overriding="false">
       </item>
     </conf>
   </confs>

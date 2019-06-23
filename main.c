@@ -5,6 +5,7 @@
  * Created on 16 December 2018, 13:17
  */
 
+#include "mcc_generated_files/mcc.h"
 
 #include <xc.h>
 #include <stdio.h>
@@ -35,13 +36,14 @@
  *  19	LED+
  *  20	LED-
  */
+char buf[20];
 void main(void) {
-    char buf[20];
-    ANSELD=0;
+//    ANSELD=0;
     //OSCCON NEEDED FOR PIC18F45K22
-#ifdef OSCCON
-    OSCCON=0X72;
-#endif
+//#ifdef OSCCON
+//    OSCCON=0X72;
+//#endif
+    SYSTEM_Initialize();
     /*
      * Initialize glcd
      */
@@ -65,23 +67,27 @@ void main(void) {
     uint8_t len;
     len=sprintf(buf,"Height %i",high);
     glcd_systext(64-len*3,8,buf,len);
-
-    char test[5];
-    test[0]="t";
-    uint16_t i=(test[0]-samplefont[2])*4+8;
-    uint8_t wide=samplefont[i];
-    const char * bitmap;
-    bitmap=samplefont+(samplefont[i+1]+(samplefont[i+2]<<8));
-    len=sprintf(buf,"Width %hi",wide);
-    glcd_systext(64-len*3,24,buf,len);
-    uint8_t w2=(wide+7)/8;
-    for(uint8_t y=0;y<high;y++) {
-        for (uint8_t x = 0; x < wide; x++) {
-            glcd_setpixel(x,y,bitmap[x/8] & (1<<(x&7))); 
+    const char test[]="test string!!";
+    uint8_t c=0;
+    uint8_t x2=0;
+    while(test[c]) {
+        uint16_t i = (test[c] - samplefont[2])*4 + 8;
+        uint8_t wide = samplefont[i];
+        const char * bitmap;
+        bitmap = samplefont + (samplefont[i + 1]+(samplefont[i + 2] << 8));
+        len = sprintf(buf, "Width %i", wide);
+        glcd_systext(64 - len * 3, 24, buf, len);
+        uint8_t w2 = (wide + 7) / 8;
+        for (uint8_t y = 0; y < high; y++) {
+            for (uint8_t x = 0; x < wide; x++) {
+                glcd_setpixel(x+x2, y+32, bitmap[x / 8] & (1 << (x & 7)));
+            }
+            bitmap += w2;
         }
-        bitmap+=w2;
+        x2+=wide;
+        x2++;
+        c++;
     }
-    
 
     for(uint8_t d=0;d<=50;d++)
     {
