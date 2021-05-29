@@ -94,6 +94,31 @@ void main(void) {
         __delay_ms(100);
     }
     glcd_clear();
+    while(1)
+    {
+        adc_result_t res;
+        LATAbits.LA2=0;
+        LATAbits.LA5=0;
+        __delay_ms(3.5);
+        res=ADCC_GetSingleConversion(channel_ANA1);
+        len=sprintf(buf,"Trig %5u",res);
+        glcd_systext(64 - len * 3, 8, buf, len);
+        LATAbits.LA2=1;
+        LATAbits.LA5=0;
+        __delay_ms(5);
+        res=ADCC_GetSingleConversion(channel_ANA0);
+        len=sprintf(buf,"X pos %5u",res);
+        glcd_systext(64 - len * 3, 24, buf, len);
+        LATAbits.LA2=0;
+        LATAbits.LA5=1;
+        __delay_ms(5);
+        res=ADCC_GetSingleConversion(channel_ANA1);
+        len=sprintf(buf,"Y pos %5u",res);
+        glcd_systext(64 - len * 3, 40, buf, len);
+        __delay_ms(100);
+        
+        
+    }
     for(uint8_t aa=10;aa<=100;aa+=10)
     {
         glcd_line(aa,10,10,53,1);
